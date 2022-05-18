@@ -17,25 +17,45 @@ function formatDate(timestamp){
 
 
 function displayTemperature(response){
-    console.log(response.data);
+
     let temperatureElement=document.querySelector("#temperature");
     let cityElement= document.querySelector("#city");
     let descriptionElement= document.querySelector("#description");
     let huminityElement=document.querySelector("#huminity");
     let windElement=document.querySelector("#wind");
     let dateElement=document.querySelector("#date");
+    let iconElement=document.querySelector("#icon");
+
     temperatureElement.innerHTML= Math.round(response.data.main.temp);
     cityElement.innerHTML= response.data.name;
     descriptionElement.innerHTML= response.data.weather[0].description;
     huminityElement.innerHTML= response.data.main.huminity;
     windElement.innerHTML=response.data.wind.speed;
     dateElement.innerHTML=formatDate(response.data.dt * 1000);
+    iconElement.setAttribute(
+      "src",
+      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.pnj`
+    );
+    iconElement.setAttribute("alt", response.data.weather[0].description);
 
 
 }   
 
-let apiKey = "148fea8d023d30747db11939455acef0";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Baltimore&appid=${apiKey}&units=metric`;
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
 
+function search(city){
+let apiKey = "148fea8d023d30747db11939455acef0";
+let city="new york";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Baltimore&appid=${apiKey}&units=metric`;
 axios.get(apiUrl).then(displayTemperature);
 
+}
+
+search=("new york");
+
+let form= document.querySelector("search-form");
+form.addEventListener("submit", handleSubmit);
