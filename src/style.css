@@ -60,3 +60,8 @@ li {
   font-weight: 100;
   line-height: 19px;
 }
+
+.weather-teperature .active{
+color: black;
+cursor: default;
+}
